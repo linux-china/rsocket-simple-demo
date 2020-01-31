@@ -35,7 +35,6 @@ public class RSocketLocalTest {
         requester.dispose();
     }
 
-
     @Test
     public void testRequestResponse() {
         Mono<Payload> payloadMono = requester.requestResponse(DefaultPayload.create("yourName", ""));
@@ -53,11 +52,4 @@ public class RSocketLocalTest {
         Thread.sleep(2000);
     }
 
-
-    private static RSocket constructRSocket(String url) {
-        return RSocketFactory.connect()
-                .transport(UriTransportRegistry.clientForUri(url))
-                .start()
-                .block();
-    }
 }
