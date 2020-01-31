@@ -38,7 +38,7 @@ public class RSocketLocalTest {
 
     @Test
     public void testRequestResponse() {
-        Mono<Payload> payloadMono = requester.requestResponse(DefaultPayload.create("雷卷", "content-type:text/plain"));
+        Mono<Payload> payloadMono = requester.requestResponse(DefaultPayload.create("yourName", ""));
         StepVerifier.create(payloadMono).assertNext(payload -> {
             System.out.println(payload.getDataUtf8());
         }).verifyComplete();
@@ -46,7 +46,7 @@ public class RSocketLocalTest {
 
     @Test
     public void testRequestStream() throws Exception {
-        Flux<Payload> flux = requester.requestStream(DefaultPayload.create("雷卷", "content-type:text/plain"));
+        Flux<Payload> flux = requester.requestStream(DefaultPayload.create("yourName", ""));
         flux.subscribe(payload -> {
             System.out.println(payload.getDataUtf8());
         });
