@@ -1,0 +1,61 @@
+package org.mvnsearch.rsocket.demo;
+
+import org.jetbrains.annotations.NotNull;
+import reactor.util.context.Context;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Stream;
+
+/**
+ * Session Reactor context
+ *
+ * @author linux_china
+ */
+public class SessionContext implements Context {
+
+    HashMap<Object, Object> holder = new HashMap<>();
+
+    @SuppressWarnings("unchecked")
+    @NotNull
+    @Override
+    public <T> T get(@NotNull Object key) {
+        return (T) holder.get(key);
+    }
+
+    @Override
+    public boolean hasKey(@NotNull Object key) {
+        return holder.containsKey(key);
+    }
+
+    @NotNull
+    @Override
+    public Context put(@NotNull Object key, @NotNull Object value) {
+        holder.put(key, value);
+        return this;
+    }
+
+    @NotNull
+    @Override
+    public Context delete(@NotNull Object key) {
+        holder.remove(key);
+        return this;
+    }
+
+    @Override
+    public int size() {
+        return holder.size();
+    }
+
+    @NotNull
+    @Override
+    public Stream<Map.Entry<Object, Object>> stream() {
+        return holder.entrySet().stream();
+    }
+
+    public Context putAll(Context other) {
+        if (other.isEmpty()) return this;
+        return new DelegatedContext(other, this);
+    }
+
+}
