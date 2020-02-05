@@ -14,7 +14,7 @@ public class RSocketResponderApp {
         SimpleResponderFactory responderFactory = new SimpleResponderFactory();
         String listenUri = "tcp://0.0.0.0:42252";
         Closeable server = (Closeable) RSocketFactory.receive()
-                .addRequesterPlugin(new RSocketSessionInterceptor())
+                .addResponderPlugin(new RSocketSessionInterceptor())
                 .acceptor(responderFactory.responder())
                 .transport(UriTransportRegistry.serverForUri(listenUri))
                 .start()
