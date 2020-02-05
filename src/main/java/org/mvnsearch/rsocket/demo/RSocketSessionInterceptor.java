@@ -17,31 +17,31 @@ public class RSocketSessionInterceptor implements RSocketInterceptor {
     @Override
     public RSocket apply(RSocket source) {
         return new AbstractRSocket() {
-            private MutableContext mutableContext = new MutableContext();
+            private SessionContext sessionContext = new SessionContext();
 
             @Override
             public Mono<Payload> requestResponse(Payload payload) {
-                return source.requestResponse(payload).subscriberContext(mutableContext::putAll);
+                return source.requestResponse(payload).subscriberContext(sessionContext::putAll);
             }
 
             @Override
             public Mono<Void> fireAndForget(Payload payload) {
-                return source.fireAndForget(payload).subscriberContext(mutableContext::putAll);
+                return source.fireAndForget(payload).subscriberContext(sessionContext::putAll);
             }
 
             @Override
             public Flux<Payload> requestStream(Payload payload) {
-                return source.requestStream(payload).subscriberContext(mutableContext::putAll);
+                return source.requestStream(payload).subscriberContext(sessionContext::putAll);
             }
 
             @Override
             public Flux<Payload> requestChannel(Publisher<Payload> payloads) {
-                return source.requestChannel(payloads).subscriberContext(mutableContext::putAll);
+                return source.requestChannel(payloads).subscriberContext(sessionContext::putAll);
             }
 
             @Override
             public Mono<Void> metadataPush(Payload payload) {
-                return source.metadataPush(payload).subscriberContext(mutableContext::putAll);
+                return source.metadataPush(payload).subscriberContext(sessionContext::putAll);
             }
 
             @Override
