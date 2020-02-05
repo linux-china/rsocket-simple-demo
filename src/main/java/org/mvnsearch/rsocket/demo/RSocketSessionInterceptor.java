@@ -20,13 +20,13 @@ public class RSocketSessionInterceptor implements RSocketInterceptor {
             private MutableContext mutableContext = new MutableContext();
 
             @Override
-            public Mono<Void> fireAndForget(Payload payload) {
-                return source.fireAndForget(payload).subscriberContext(mutableContext::putAll);
+            public Mono<Payload> requestResponse(Payload payload) {
+                return source.requestResponse(payload).subscriberContext(mutableContext::putAll);
             }
 
             @Override
-            public Mono<Payload> requestResponse(Payload payload) {
-                return source.requestResponse(payload).subscriberContext(mutableContext::putAll);
+            public Mono<Void> fireAndForget(Payload payload) {
+                return source.fireAndForget(payload).subscriberContext(mutableContext::putAll);
             }
 
             @Override
