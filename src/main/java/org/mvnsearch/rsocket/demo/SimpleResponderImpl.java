@@ -8,6 +8,7 @@ import io.rsocket.util.DefaultPayload;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.util.context.Context;
 
 import java.util.UUID;
 
@@ -51,7 +52,7 @@ public class SimpleResponderImpl extends AbstractRSocket {
                 context.put("counter", 1);
             }
             return Mono.just(DefaultPayload.create(String.format("Hello %s! Request: %s", dataUtf8, context.get("counter"))));
-        }));
+        })).subscriberContext(Context.of("nick", "linux_china"));
     }
 
     @Override
