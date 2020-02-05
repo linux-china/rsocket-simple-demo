@@ -3,9 +3,13 @@ RSocket Simple Demo
 
 RSocket simple demo for responder creation, unit test for local etc.
 
-# Responder creation
+# Responder Creation
 
 ![RSocket Responder](rsocket_responder.png)
+
+# RSocket Session
+
+请参考： [RSocketSessionInterceptor](src/main/java/org/mvnsearch/rsocket/demo/RSocketSessionInterceptor.java)
 
 # Local Test with JUnit 5
 
