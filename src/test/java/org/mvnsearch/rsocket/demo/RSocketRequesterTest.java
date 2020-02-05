@@ -36,11 +36,14 @@ public class RSocketRequesterTest {
 
     @Test
     public void testRequestResponse() throws Exception {
-        requester.requestResponse(DefaultPayload.create("Your Name", ""))
-                .subscribe(payload -> {
-                    System.out.println(payload.getDataUtf8());
-                });
-        Thread.sleep(500000);
+        for (int i = 0; i < 3; i++) {
+            requester.requestResponse(DefaultPayload.create("Your Name", ""))
+                    .subscribe(payload -> {
+                        System.out.println(payload.getDataUtf8());
+                    });
+            Thread.sleep(2000);
+        }
+
     }
 
     @Test
