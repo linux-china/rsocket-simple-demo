@@ -43,9 +43,15 @@ public class SimpleResponderImpl extends AbstractRSocket {
 
     @Override
     public Mono<Payload> requestResponse(Payload payload) {
-        String dataUtf8 = payload.getDataUtf8();
-        System.out.println(dataUtf8);
-        return Mono.just(DefaultPayload.create(String.format("Hello %s!", dataUtf8)));
+        return Mono.deferWithContext((context -> {
+            String dataUtf8 = payload.getDataUtf8();
+            if (context.hasKey("counter")) {
+                context.put("counter", ((Integer) context.get("counter") + 1));
+            } else {
+                context.put("counter", 1);
+            }
+            return Mono.just(DefaultPayload.create(String.format("Hello %s! Request: %s", dataUtf8, context.get("counter"))));
+        }));
     }
 
     @Override
